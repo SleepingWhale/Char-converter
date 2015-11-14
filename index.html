@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Char converter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <form>
+        <input type="radio" name="rank" value="10" id="dec" checked>
+        <label for="dec">Char code</label>
+        <br>
+        <input type="radio" name="rank" value="10" id="htm">
+        <label for="htm">HTML code</label>
+        <br>
+        <input type="radio" name="rank" value="2" id="boo">
+        <label for="boo">Boolean</label>
+        <br>
+        <input type="radio" name="rank" value="16" id="hex">
+        <label for="hex">Hexadecimal</label>
+        <br>
+        <textarea rows="10" id="input"></textarea>
+        <textarea rows="10" id="output" disabled></textarea>
+    </form>
+
+</body>
+<script>
+    var inp = document.getElementById("input");
+    var out = document.getElementById("output");
+    var ranks = document.getElementsByName("rank");
+    var rank;
+    var type;
+
+    function translate(data, rank, type) {
+        var result = '';
+        var prefix = (type === "htm"?"&#":"");
+        var postfix = (type === "htm"?";":" ");
+        for (var i = 0, l = data.length; i < l; i++) {
+            result += prefix + data[i].charCodeAt(0).toString(rank) + postfix;
+        }
+        return result;
+    }
+    
+    function onChangeHandler() {
+        var content = inp.value;
+        out.textContent = translate(content,rank,type);
+    }
+    function onControls(){
+            rank = Number(this.value);
+            type = this.id;
+            onChangeHandler();
+        }
+
+    inp.addEventListener("keyup", onChangeHandler, false);
+    
+    for(var i=0, l=ranks.length; i<l; i++){
+        ranks[i].addEventListener("click", onControls, false);
+        if(ranks[i].checked === true){
+            onControls.apply(ranks[i]);
+        }
+    }
+    
+</script>
+
+</html>
