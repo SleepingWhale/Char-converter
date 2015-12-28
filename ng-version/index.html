@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="char">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Char converter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body ng-controller="converter as conv">
+    <form>
+        <div ng-repeat="(type, opts) in conv.options">
+            <input type="radio" name="rank" ng-attr-value="{{type}}" ng-attr-id="{{type}}" ng-model="conv.checked" ng-click="conv.convert()">
+            <label ng-attr-for="{{type}}" ng-bind="type"></label>
+        </div>
+        <textarea rows="10" id="input" ng-model="conv.input" ng-change="conv.convert()"></textarea>
+        <textarea rows="10" id="output" ng-bind="conv.output"></textarea>
+        <br>
+        <!--<input type="button" ng-click="conv.convert()" value="convert">-->
+    </form>
+    <span>{{test}}</span>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js">
+    </script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
