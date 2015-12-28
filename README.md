@@ -1,6 +1,6 @@
 # Char converter
 
-Pure JS and AngularJS versions of char coverter.
+Pure JS and AngularJS versions of char converter.
 It converts plain text to
 <ul>
 <li>Boolean code</li>
