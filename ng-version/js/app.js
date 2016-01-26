@@ -1,10 +1,7 @@
 angular
     .module("char", [])
-    .controller("converter", [mainController]);
-
-function mainController() {
-    var self = this;
-    self.options = {
+    .controller("converter", ["optList", mainController])
+    .constant("optList", {
         "Boolean": {
             rank: 2,
             pref: "",
@@ -25,7 +22,11 @@ function mainController() {
             pref: "",
             post: " "
         }
-    };
+    });
+
+function mainController(optList) {
+    var self = this;
+    self.options = optList;
     self.convert = function () {
         if (!self.input) {
             self.output = "";
@@ -37,9 +38,7 @@ function mainController() {
         }
         self.output = "";
         for (var i = 0, l = self.input.length; i < l; i++) {
-            self.output += self.options[self.checked].pref 
-                + self.input[i].charCodeAt(0).toString(self.options[self.checked].rank) 
-                + self.options[self.checked].post;
+            self.output += self.options[self.checked].pref + self.input[i].charCodeAt(0).toString(self.options[self.checked].rank) + self.options[self.checked].post;
         }
     }
 }
