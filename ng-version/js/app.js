@@ -1,6 +1,6 @@
 angular
     .module("char", [])
-    .controller("converter", ["optList", mainController])
+    .controller("converter", ["optList", "translatorFilter", mainController])
     .constant("optList", {
         "Boolean": {
             rank: 2,
@@ -22,10 +22,12 @@ angular
             pref: "",
             post: " "
         }
-    });
+    })
+    .filter("translator", [tran]);
 
-function mainController(optList) {
-    var self = this;
+function mainController(optList, translatorFilter) {
+    var self = this,
+        i, l;
     self.options = optList;
     self.convert = function () {
         if (!self.input) {
@@ -36,9 +38,18 @@ function mainController(optList) {
             self.output = self.input;
             return;
         }
-        self.output = "";
-        for (var i = 0, l = self.input.length; i < l; i++) {
-            self.output += self.options[self.checked].pref + self.input[i].charCodeAt(0).toString(self.options[self.checked].rank) + self.options[self.checked].post;
+        self.output = translatorFilter(self.input,
+                                       self.options[self.checked].rank, self.options[self.checked].pref, self.options[self.checked].post);
+    }
+}
+
+function tran() {
+    return function (data, rank, prefix, postfix) {
+        var i, l,
+            result = "";
+        for (i = 0, l = data.length; i < l; i++) {
+            result += prefix + data[i].charCodeAt(0).toString(rank) + postfix;
         }
+        return result;
     }
 }
