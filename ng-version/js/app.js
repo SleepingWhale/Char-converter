@@ -26,18 +26,10 @@ angular
     .filter("translator", [tran]);
 
 function mainController(optList, translatorFilter) {
-    var self = this,
-        i, l;
+    var self = this;
     self.options = optList;
+    self.checked = "Boolean";
     self.convert = function () {
-        if (!self.input) {
-            self.output = "";
-            return;
-        }
-        if (!self.checked) {
-            self.output = self.input;
-            return;
-        }
         self.output = translatorFilter(self.input,
                                        self.options[self.checked].rank, self.options[self.checked].pref, self.options[self.checked].post);
     }
